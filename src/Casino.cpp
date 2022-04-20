@@ -5,8 +5,8 @@
 #include <random>
 
 #include "Casino.h"
-#include "Player.h"
-#include "Karta.h"
+//#include "Player.h"
+//#include "Karta.h"
 #include <sstream>
 
 

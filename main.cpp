@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Karta.h"
+//#include "Karta.h"
 #include "Casino.h"
-#include <Player.h>
+//#include <Player.h>
 int main() {
-    Casino casinoRoyale = Casino(true);
+    Casino casinoRoyale = Casino();
 //    casinoRoyale.shuffleDeck();
 //    std::cout<<casinoRoyale;
 

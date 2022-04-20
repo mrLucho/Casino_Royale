@@ -5,8 +5,9 @@
 #ifndef CASINO_ROYALE_PLAYER_H
 #define CASINO_ROYALE_PLAYER_H
 
+#include <vector>
 #include "Karta.h"
-#include "Casino.h"
+//#include "Casino.h"
 
 class Player{
 public:
