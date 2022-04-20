@@ -12,11 +12,14 @@
 #include "Player.h"
 class Casino{
 public:
-    Casino();
+    Casino(bool debug = false);
     void shuffleDeck(int numTimes=100);
     friend std::ostream& operator<<(std::ostream& os, const Casino& casino);
     Karta* popCard();
-
+    void setupGame();
+    void play();
+    bool checkGameOver();  // check if all passed
+    std::string getWinner()const;
 private:
     void prepareDeck();
     std::mt19937 rng_;

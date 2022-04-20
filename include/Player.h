@@ -10,14 +10,25 @@
 
 class Player{
 public:
+    Player(std::string name);
+    Player();
     void takeCard(Karta* card);
-    std::string showHand () const;
+    std::string showHand() const;
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
+    bool askToPass(); //returns true or asks user to input
 
+    void autoPass();//updates if points exceeded limit
+
+    int getPoints()const{return points_;}
+    bool isWinner()const {return points_ ==21;}
+    bool getPass()const{return passed_;};
+    bool operator==(const Player &other){return other.name_ == this->name_;}
 private:
+
     std::vector<Karta*> cards_;
     int points_;
     std::string name_;
+    bool passed_ = false;
 };
 
 

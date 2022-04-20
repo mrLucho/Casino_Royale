@@ -18,10 +18,55 @@ std::ostream& operator<<(std::ostream& os,const Player& player){
     os << "Player : " << player.name_ << "Points" << player.points_ <<std::endl;
     os<<player.showHand();
     os << "------------------------------";
+    return os;
 }
 
 void Player::takeCard(Karta *card) {
     if(cards_.size() != 10){
         cards_.push_back(card);
+        points_+= card->getWartosc();
     }
+}
+
+bool Player::askToPass() {
+//    first check if needed to ask
+    autoPass();
+    if(getPass()){
+        return true;
+    }
+    else{
+        std::string decision;
+        std::cout<<"Do u want to pass? if so type true or false:"<<std::endl;
+        std::cin>>decision;
+        if(decision == "true"){
+            passed_ = true;
+            return true;
+        }
+        else if(decision == "false"){
+            return false;
+        }
+        else{
+            std::cout<<"learn how to type moron, I take it as no"<<std::endl;
+            return false;
+        }
+    }
+}
+
+void Player::autoPass() {
+    if(points_ >= 21){
+        passed_ = true;
+    }
+}
+
+Player::Player(std::string name) :name_(name){
+    points_ = 0;
+    passed_ = false;
+}
+Player::Player() {
+    std::cout<<"Enter player name:"<<std::endl;
+    std::string input;
+    std::cin>>input;
+    name_ = input;
+    points_ = 0;
+    passed_= false;
 }
