@@ -13,7 +13,9 @@
 
 class Casino{
 public:
-    Casino(bool debug = false);
+    Casino(Casino const &a) = default;
+    Casino(std::vector<Player*>players);
+
     void shuffleDeck(int numTimes=100);
     friend std::ostream& operator<<(std::ostream& os, const Casino& casino);
     Karta* popCard();
@@ -21,8 +23,14 @@ public:
     void play();
     bool checkGameOver();  // check if all passed
     std::string getWinner()const;
+
+//    --------------Debug
+
+    std::string showPlayer(int num); //prints players hand
+    int getDeckSize()const{return currentDeck_.size();} //current size
+
 private:
-    void prepareDeck();
+    void prepareDeck(); //used once during constr of casino sets rng
     std::mt19937 rng_;
     std::vector<Karta*> currentDeck_;
     std::vector<Player*> players_;

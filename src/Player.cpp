@@ -6,10 +6,10 @@
 #include <sstream>
 
 std::string Player::showHand()const {
-std::stringstream os;
+    std::stringstream os;
+    os<<Player::name_<<std::endl;
     for(auto card : cards_){
-        os<<card<<std::endl;
-//        os<< card << " ";
+        os<<*card<<std::endl;
     }
     return os.str();
 }

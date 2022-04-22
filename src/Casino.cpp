@@ -1,13 +1,10 @@
 //
 // Created by micha on 13.04.2022.
 //
-//#include<bits/stdc++.h>
 #include <random>
-
 #include "Casino.h"
-//#include "Player.h"
-//#include "Karta.h"
 #include <sstream>
+#include <utility>
 
 
 
@@ -32,8 +29,12 @@ void Casino::prepareDeck() {
 }
 
 std::ostream &operator<<(std::ostream &os, const Casino &casino) {
-    for(auto cardPtr : casino.currentDeck_){
-        os << *cardPtr << std::endl;
+//    print every card available
+//    for(auto cardPtr : casino.currentDeck_){
+//        os << *cardPtr << std::endl;
+//    }
+    for(auto playerPtr : casino.players_){
+        os<<playerPtr->showHand()<<std::endl;
     }
 }
 
@@ -59,20 +60,20 @@ Karta *Casino::popCard() {
     return card;
 }
 
-Casino::Casino(bool debug) {
-//    TODO: add non debug config
-
-    prepareDeck();
-    if(debug) {
-        Player player1 = Player("pl 1");
-        Player player2 = Player("pl 2");
-        Player player3 = Player("pl 3");
-        Player player4 = Player("pl 4");
-        std::vector<Player*> players{&player1,&player2,&player3,&player4};
-        players_ = players;
-
-    }
-}
+//Casino::Casino(bool debug) {
+////    TODO: add non debug config
+//
+//    prepareDeck();
+//    if(debug) {
+//        Player player1 = Player("pl 1");
+//        Player player2 = Player("pl 2");
+//        Player player3 = Player("pl 3");
+//        Player player4 = Player("pl 4");
+//        std::vector<Player*> players{&player1,&player2,&player3,&player4};
+//        players_ = players;
+//
+//    }
+//}
 
 void Casino::setupGame() {
     for(auto playerPtr : players_){
@@ -133,4 +134,15 @@ std::string Casino::getWinner() const {
         os<<std::endl;
     }
     return os.str();
+}
+
+
+Casino::Casino(std::vector<Player*> players) {
+    Casino::prepareDeck();
+    players_ = std::move(players);
+
+}
+
+std::string Casino::showPlayer(int num) {
+    return players_[num]->showHand();
 }
