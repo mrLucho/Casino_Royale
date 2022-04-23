@@ -15,11 +15,12 @@ int main() {
 
 
     Casino casinoRoyale = Casino(players);
-    casinoRoyale.shuffleDeck();
-    casinoRoyale.setupGame();
+//    casinoRoyale.shuffleDeck();
+//    casinoRoyale.setupGame();
 //    std::cout<<casinoRoyale.showPlayer(0);
 //    std::cout<<casinoRoyale.getDeckSize()<<std::endl;
-    std::cout<<casinoRoyale;
+//    std::cout<<casinoRoyale;
+    casinoRoyale.play();
 
     return EXIT_SUCCESS;
 }

@@ -16,7 +16,7 @@ public:
     void takeCard(Karta* card);
     std::string showHand() const;
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
-    bool askToPass(); //returns true or asks user to input
+    bool askToPass(); //returns true or asks user to input uses auto pass
 
     void autoPass();//updates if points exceeded limit
 

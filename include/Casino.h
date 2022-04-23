@@ -23,7 +23,7 @@ public:
     void play();
     bool checkGameOver();  // check if all passed
     std::string getWinner()const;
-
+    std::string to_string()const;
 //    --------------Debug
 
     std::string showPlayer(int num); //prints players hand

@@ -88,13 +88,17 @@ void Casino::setupGame() {
 void Casino::play() {
     setupGame(); // give two cards to every player
 //    TODO: implement game logic
+    std::cout<< this->to_string()<<std::endl;
+
     while (not checkGameOver()){
         for(auto playerPtr : players_){
             if( not playerPtr->askToPass()){
                 playerPtr->takeCard(this->popCard());
             }
         }
+        std::cout<< this->to_string()<<std::endl;
     }
+    std::cout<<getWinner()<<std::endl;
 }
 
 bool Casino::checkGameOver() {
@@ -107,8 +111,10 @@ bool Casino::checkGameOver() {
     return true;
 }
 
+//fixme
 std::string Casino::getWinner() const {
     std::ostringstream os;
+    os<<"---------------------"<<std::endl;
     Player temp = Player("temp if u see this something went wrong");
     Player* winner = &temp;
     std::vector<Player*> winners;
@@ -120,12 +126,13 @@ std::string Casino::getWinner() const {
             winner = playerPtr;
         }
     }
-    if(winners.empty()){
-        os<<"the winner is : "<<*winner<<std::endl;
-    }
-    else if(*winner == temp){
+    if(*winner == temp){
         os<<"no one won"<<std::endl;
     }
+    else if(winners.size() == 1){
+        os<<"the winner is : "<<std::endl<<*(winners[0])<<std::endl;
+    }
+
     else{
         os<<"the winners are ";
         for(auto playerPtr : winners){
@@ -133,6 +140,7 @@ std::string Casino::getWinner() const {
         }
         os<<std::endl;
     }
+    os<<"---------------------"<<std::endl;
     return os.str();
 }
 
@@ -145,4 +153,12 @@ Casino::Casino(std::vector<Player*> players) {
 
 std::string Casino::showPlayer(int num) {
     return players_[num]->showHand();
+}
+
+std::string Casino::to_string()const {
+    std::string result = "";
+    for(auto playerPtr : players_){
+        result+=playerPtr->showHand();
+    }
+    return result;
 }

@@ -7,7 +7,7 @@
 
 std::string Player::showHand()const {
     std::stringstream os;
-    os<<Player::name_<<std::endl;
+    os<<Player::name_<<" Points: " << Player::points_<<std::endl;
     for(auto card : cards_){
         os<<*card<<std::endl;
     }
@@ -15,9 +15,8 @@ std::string Player::showHand()const {
 }
 
 std::ostream& operator<<(std::ostream& os,const Player& player){
-    os << "Player : " << player.name_ << "Points" << player.points_ <<std::endl;
+//    os << "Player : " << player.name_ << "Points" << player.points_ <<std::endl;
     os<<player.showHand();
-    os << "------------------------------";
     return os;
 }
 
@@ -36,6 +35,7 @@ bool Player::askToPass() {
     }
     else{
         std::string decision;
+        std::cout<<name_<<std::endl;
         std::cout<<"Do u want to pass? if so type true or false:"<<std::endl;
         std::cin>>decision;
         if(decision == "true"){
