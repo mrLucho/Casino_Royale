@@ -1,6 +1,3 @@
-//
-// Created by micha on 14.04.2022.
-//
 
 #include "Player.h"
 #include <sstream>
@@ -13,19 +10,25 @@ std::string Player::showHand()const {
     }
     return os.str();
 }
-
-std::ostream& operator<<(std::ostream& os,const Player& player){
-//    os << "Player : " << player.name_ << "Points" << player.points_ <<std::endl;
-    os<<player.showHand();
-    return os;
-}
-
 void Player::takeCard(Karta *card) {
     if(cards_.size() != 10){
         cards_.push_back(card);
         points_+= card->getWartosc();
     }
 }
+
+std::ostream& operator<<(std::ostream& os,const Player& player){
+    os<<player.showHand();
+    return os;
+}
+
+void Player::autoPass() {
+    if(points_ >= 21){
+        passed_ = true;
+    }
+}
+
+
 
 bool Player::askToPass() {
 //    first check if needed to ask
@@ -46,27 +49,12 @@ bool Player::askToPass() {
             return false;
         }
         else{
-            std::cout<<"learn how to type moron, I take it as no"<<std::endl;
-            return false;
+            std::cout<<"learn how to type moron, I take it as yes"<<std::endl;
+            passed_ = true;
+            return true;
         }
     }
 }
 
-void Player::autoPass() {
-    if(points_ >= 21){
-        passed_ = true;
-    }
-}
 
-Player::Player(std::string name) :name_(name){
-    points_ = 0;
-    passed_ = false;
-}
-Player::Player() {
-    std::cout<<"Enter player name:"<<std::endl;
-    std::string input;
-    std::cin>>input;
-    name_ = input;
-    points_ = 0;
-    passed_= false;
-}
+
