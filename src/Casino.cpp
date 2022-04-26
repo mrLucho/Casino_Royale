@@ -57,20 +57,7 @@ Karta *Casino::popCard() {
     return card;
 }
 
-//Casino::Casino(bool debug) {
-////    fixme init casino without vector of players*
-//
-//    prepareDeck();
-//    if(debug) {
-//        Player player1 = Player("pl 1");
-//        Player player2 = Player("pl 2");
-//        Player player3 = Player("pl 3");
-//        Player player4 = Player("pl 4");
-//        std::vector<Player*> players{&player1,&player2,&player3,&player4};
-//        players_ = players;
-//
-//    }
-//}
+
 
 void Casino::setupGame() {
     for(auto playerPtr : players_){
@@ -84,23 +71,15 @@ void Casino::setupGame() {
 
 void Casino::play() {
     setupGame(); // give two cards to every player
-//    TODO: implement game logic
+
     std::cout<< this->to_string()<<std::endl;
 
     while (not checkGameOver()){
-//        for(auto playerPtr : players_){
-//            if( not playerPtr->askToPass()){
-//                playerPtr->takeCard(this->popCard());
-//            }
-//        }
-//awful and not change anything
-        for(int i=0;i<players_.size();i++){
-            if(not (*(players_[i])).askToPass()){
-                (*(players_[i])).takeCard(this->popCard());
+        for(auto playerPtr : players_){
+            if( not playerPtr->askToPass()){
+                playerPtr->takeCard(this->popCard());
             }
         }
-
-
         std::cout<< this->to_string()<<std::endl;
     }
     std::cout<<getWinner()<<std::endl;
@@ -116,35 +95,47 @@ bool Casino::checkGameOver() {
     return true;
 }
 
-//fixed
+//looks like working func
 std::string Casino::getWinner() const {
     std::ostringstream os;
     os<<"---------------------"<<std::endl;
-    Player temp = Player("temp if u see this something went wrong");
-    Player* winner = &temp;
-    std::vector<IPlayer*> winners;
+    std::vector<IPlayer*> winner21P;
+    std::vector<int> allPlPoints;
     for(auto playerPtr : players_){
         if(playerPtr->isWinner()){
-            winners.push_back(playerPtr);
+            winner21P.push_back(playerPtr);
         }
-        if(playerPtr->getPoints() > winner->getPoints() and playerPtr->getPoints() < 21){
-//            winner = playerPtr; todo fixme
+        allPlPoints.push_back(playerPtr->getPoints());
+    }
+    allPlPoints.push_back(0);
+    int indexHighestPointsLessThan21 = allPlPoints.size()-1; //last index
+    for (int i = 0; i < getPlayersNum(); ++i) {
+        if(allPlPoints[i] < 21 and allPlPoints[i] > allPlPoints[indexHighestPointsLessThan21]){
+            indexHighestPointsLessThan21 = i;
+//          fixme  in case 2 winners here neglect it now
         }
-    }
-    if(*winner == temp){
-        os<<"no one won"<<std::endl;
-    }
-    else if(winners.size() == 1){
-        os<<"the winner is : "<<std::endl<<*(winners[0]);
     }
 
-    else{
+
+
+    if(winner21P.empty() and indexHighestPointsLessThan21 == allPlPoints.size()-1){
+        os<<"no one won"<<std::endl;
+    }
+    else if(winner21P.size() == 1){
+        os<<"the winner is : "<<std::endl<<*(winner21P[0]);
+    }
+
+    else if ( not winner21P.empty()){
         os<<"the winners are ";
-        for(auto playerPtr : winners){
+        for(auto playerPtr : winner21P){
             os<<*playerPtr <<", ";
         }
         os<<std::endl;
     }
+    else{
+        os<<"the winner is : "<<std::endl<<*(players_[indexHighestPointsLessThan21]);
+    }
+
     os<<"---------------------"<<std::endl;
     return os.str();
 }
@@ -177,9 +168,11 @@ Casino::Casino(int numHumanPlayers) {
         players_.push_back(p);
     }
     Bot* d = nullptr;
-    for (int j = numHumanPlayers; j < 4; ++j) {
-        d = new Bot("Bot"+ std::to_string(j+1),Courage::rash);
+    int botNum = 1;
+    for (int j = numHumanPlayers; j < 4; j++) {
+        d = new Bot("Bot"+ std::to_string(botNum),Courage::rash);
         players_.push_back(d);
+        botNum++;
     }
 
 }

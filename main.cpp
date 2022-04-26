@@ -14,7 +14,7 @@ int main() {
 //    std::vector<Player*> players = {&player1,&player2,&player3,&bot1};
 
 
-    Casino casinoRoyale = Casino(3);
+    Casino casinoRoyale = Casino(2);
 //    casinoRoyale.shuffleDeck();
 //    casinoRoyale.setupGame();
 //    std::cout<<casinoRoyale.showPlayer(0);

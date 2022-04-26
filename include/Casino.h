@@ -29,6 +29,7 @@ public:
     bool checkGameOver();  // check if all passed
     std::string getWinner()const;
     std::string to_string()const;
+    int getPlayersNum()const{return players_.size();}
 
 
 //    --------------Debug

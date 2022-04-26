@@ -11,31 +11,8 @@
 #include "IPlayer.h"
 class Player:public IPlayer{
 public:
-    Player(std::string name) : IPlayer(name){}
+    Player(std::string name) : IPlayer(std::move(name)){}
     bool askToPass()override; //returns true or asks user to input uses auto pass
-
-
-
-
-//    bool operator==(const Player &other){return other.name_ == this->name_;}
-//    void takeCard(Karta* card);
-//    friend std::ostream& operator<<(std::ostream& os, const Player& player);
-//    std::string showHand() const;
-
-
-//    void autoPass();//updates if points exceeded limit
-//    int getPoints()const{return points_;}
-//    bool isWinner()const {return points_ ==21;}
-//    bool getPass()const{return passed_;};
-//    bool operator==(const Player &other){return other.name_ == this->name_;}
-
-
-//protected:
-//    std::vector<Karta*> cards_;
-//    int points_ = 0;
-//    bool passed_ = false;
-//    std::string name_;
-
 };
 
 

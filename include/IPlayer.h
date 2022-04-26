@@ -12,7 +12,7 @@
 class IPlayer{
 public:
     IPlayer(std::string name):name_(std::move(name)){};
-
+    virtual ~IPlayer()=default;
     void takeCard(Karta* card);
     friend std::ostream& operator<<(std::ostream& os, const IPlayer& player);
     std::string showHand() const;
