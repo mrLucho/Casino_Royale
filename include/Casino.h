@@ -18,7 +18,7 @@
 class Casino{
 public:
     Casino(Casino const &a) = default;
-    Casino(std::vector<Player*>players);
+    Casino(std::vector<IPlayer*>players);
 
 
     void shuffleDeck(int numTimes=100);
@@ -48,6 +48,6 @@ private:
     void prepareDeck(); //used once during constr of casino sets rng
     std::mt19937 rng_;
     std::vector<Karta*> currentDeck_;
-    std::vector<Player*> players_;
+    std::vector<IPlayer*> players_;
 };
 #endif //CASINO_ROYALE_CASINO_H

@@ -122,13 +122,13 @@ std::string Casino::getWinner() const {
     os<<"---------------------"<<std::endl;
     Player temp = Player("temp if u see this something went wrong");
     Player* winner = &temp;
-    std::vector<Player*> winners;
+    std::vector<IPlayer*> winners;
     for(auto playerPtr : players_){
         if(playerPtr->isWinner()){
             winners.push_back(playerPtr);
         }
         if(playerPtr->getPoints() > winner->getPoints() and playerPtr->getPoints() < 21){
-            winner = playerPtr;
+//            winner = playerPtr; todo fixme
         }
     }
     if(*winner == temp){
@@ -150,7 +150,7 @@ std::string Casino::getWinner() const {
 }
 
 
-Casino::Casino(std::vector<Player*> players) {
+Casino::Casino(std::vector<IPlayer*> players) {
     Casino::prepareDeck();
     players_ = std::move(players);
 

@@ -10,10 +10,10 @@
 
 enum class Courage {rash, normal, cautious};
 
-class Bot : public Player{
+class Bot : public IPlayer{
 public:
-    Bot(std::string name,Courage courage) : Player(std::move(name)),courage_(courage) {};
-    bool askToPass();
+    Bot(std::string name,Courage courage) : IPlayer(std::move(name)),courage_(courage) {};
+    bool askToPass()override;
 
 private:
     Courage courage_; // needed only for askToPass
