@@ -18,7 +18,6 @@
 class Casino{
 public:
     Casino(Casino const &a) = default;
-    Casino(std::vector<IPlayer*>players);
 
 
     void shuffleDeck(int numTimes=100);
@@ -32,30 +31,22 @@ public:
     int getPlayersNum()const{return players_.size();}
 
 
-//    --------------Debug
+
+
+    Casino(int numHumanPlayers=4,int shuffles=100);
+    ~Casino();
+
+    //    --------------Debug
     std::string showPlayer(int num); //prints players hand
     int getDeckSize()const{return currentDeck_.size();} //current size
     void printAllCards()const;
 
-    Casino(int numHumanPlayers=4,int shuffles=100);
-    ~Casino(){
-        for (auto pObj = players_.begin();
-             pObj != players_.end(); ++pObj) {
-            delete *pObj; // Note that this is deleting what pObj points to,
-            // which is a pointer
-        }
-        for (auto pObj = currentDeck_.begin();
-             pObj != currentDeck_.end(); ++pObj) {
-            delete *pObj; // Note that this is deleting what pObj points to,
-            // which is a pointer
-        }
-    }
 
 private:
     void prepareDeck(); //used once during constr of casino sets rng
     std::mt19937 rng_;
     std::vector<Karta*> currentDeck_;
     std::vector<IPlayer*> players_;
-    int currentCardIndexToGive=0;
+    int currentCardIndexToGive_=0;
 };
 #endif //CASINO_ROYALE_CASINO_H

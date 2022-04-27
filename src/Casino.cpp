@@ -11,21 +11,6 @@ void Casino::prepareDeck() {
     std::mt19937 rng(time(0));
     rng_ = rng;
 
-//    fill current deck
-//    std::vector<Karta> temp;
-//    for(int colour = 0;colour<4;colour++){
-//        for(int figureNum =0;figureNum<13;figureNum++){
-//            Karta tempCard = Karta(colour,figureNum);
-//            temp.emplace_back(tempCard);
-//        }
-//    }
-//
-//
-////    ugly af but works instead of range for loop
-//    for(int i = 0;i<temp.size();i++){
-//        currentDeck_.push_back(&(temp[i]));
-//    }
-
     for(int colour = 0;colour<4;colour++){
         for(int figureNum =0;figureNum<13;figureNum++) {
             currentDeck_.push_back(new Karta(colour,figureNum));
@@ -34,10 +19,6 @@ void Casino::prepareDeck() {
 }
 
 std::ostream &operator<<(std::ostream &os, const Casino &casino) {
-//    print every card available
-//    for(auto cardPtr : casino.currentDeck_){
-//        os << *cardPtr << std::endl;
-//    }
     for(auto playerPtr : casino.players_){
         os<<playerPtr->showHand()<<std::endl;
     }
@@ -50,7 +31,7 @@ void Casino::shuffleDeck(int numTimes) {
     for(int i=0;i<numTimes;i++){
         int index1 = CardDist(rng_);
         int index2 = CardDist(rng_);
-//        equal indexes shouldn't be a problem
+//        todo: make swap
         if(index1 != index2) {
             Karta* temp = currentDeck_[index1];
             currentDeck_[index1] = currentDeck_[index2];
@@ -61,11 +42,8 @@ void Casino::shuffleDeck(int numTimes) {
 }
 
 Karta *Casino::popCard() {
-//    Karta* card = currentDeck_[currentDeck_.size()-1];
-//    currentDeck_.pop_back();
-//    return card;
-    Karta* card = currentDeck_[currentCardIndexToGive];
-    currentCardIndexToGive++;
+    Karta* card = currentDeck_[currentCardIndexToGive_];
+    currentCardIndexToGive_++;
     return card;
 }
 
@@ -154,12 +132,6 @@ std::string Casino::getWinner() const {
 }
 
 
-Casino::Casino(std::vector<IPlayer*> players) {
-    Casino::prepareDeck();
-    players_ = std::move(players);
-
-}
-
 std::string Casino::showPlayer(int num) {
     return players_[num]->showHand();
 }
@@ -194,5 +166,17 @@ Casino::Casino(int numHumanPlayers,int shuffles ) {
 void Casino::printAllCards() const {
     for (auto cardPtr : currentDeck_){
         cardPtr->wypisz();
+    }
+}
+Casino::~Casino() {
+//    don't touch it
+    for (auto pObj = players_.begin();
+         pObj != players_.end(); ++pObj) {
+        delete *pObj;
+    }
+    for (auto pObj = currentDeck_.begin();
+         pObj != currentDeck_.end(); ++pObj) {
+        delete *pObj; // Note that this is deleting what pObj points to,
+        // which is a pointer
     }
 }

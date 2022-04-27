@@ -7,12 +7,13 @@
 
 #include <utility>
 #include <vector>
-//#include "Karta.h"
 #include "IPlayer.h"
+
+
 class Player:public IPlayer{
 public:
     Player(std::string name) : IPlayer(std::move(name)){}
-    bool askToPass()override; //returns true or asks user to input uses auto pass
+    bool askToPass()override; //returns true or asks user to input, uses auto pass
 };
 
 

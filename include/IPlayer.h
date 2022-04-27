@@ -26,7 +26,11 @@ public:
 
     virtual bool askToPass() = 0;
 
-    void PunktyRzeczywiscieWyjebalo()const{if(points_>100){std::cout<<"jeblo"<<std::endl;}};
+//    Debug ----------------------------------------------------
+//    fixme remember to delete
+    void PunktyRzeczywiscieWyjebalo()const{
+        if(points_>100){std::cout<<"jeblo"<<std::endl;}
+    };
 
 protected:
     std::vector<Karta*> cards_;
