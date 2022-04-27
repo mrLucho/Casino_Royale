@@ -10,11 +10,11 @@ bool Bot::askToPass() {
             return false;
 
         case Courage::normal:
-            if (points_ >=18) return true;
-            else return false;
+            if (points_ >=18) passed_ = true;
+            return passed_;
 
         case Courage::cautious:
-            if (points_ >=14) return true;
-            else return false;
+            if (points_ >=14) passed_= true;
+            return passed_;
     }
 }
