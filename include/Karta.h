@@ -22,14 +22,8 @@ public:
     char getFigura() const { return figura; }
     int getWartosc() const { return wartosc; }
     void wypisz() const { std::cout << figura << kolor; }
-//    mine
-    friend std::ostream& operator<<(std::ostream& os, const Karta& card);
 };
+std::ostream &operator<<(std::ostream &os, const Karta& card);
 
-//std::string to_string(const Karta& card){
-//    std::string res;
-//     res += card.getFigura();
-//     res += card.getKolor();
-//    return res;
-//}
+
 #endif //CASINO_ROYALE_KARTA_H

@@ -24,7 +24,7 @@ int main() {
 //    std::cout<<casinoRoyale.showPlayer(0);
 //    std::cout<<casinoRoyale<<std::endl;
 //    std::cout<<casinoRoyale;
-    casinoRoyale.play();
+    casinoRoyale.playRound();
 //std::cout<<casinoRoyale
 
     return EXIT_SUCCESS;

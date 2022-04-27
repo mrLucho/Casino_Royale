@@ -24,7 +24,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Casino& casino);
     Karta* popCard();
     void setupGame();
-    void play();
+    void playRound();
     bool checkGameOver();  // check if all passed
     std::string getWinner()const;
     std::string to_string()const;

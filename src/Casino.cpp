@@ -59,7 +59,7 @@ void Casino::setupGame() {
     }
 }
 
-void Casino::play() {
+void Casino::playRound() {
     setupGame(); // give two cards to every player
 
     std::cout<< this->to_string()<<std::endl;
@@ -78,7 +78,7 @@ void Casino::play() {
 
 bool Casino::checkGameOver() {
     for(auto player : this->players_){
-//        if even one player not passed play on
+//        if even one player not passed playRound on
         if(not player->getPass()){
             return false;
         }
