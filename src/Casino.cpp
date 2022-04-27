@@ -8,21 +8,28 @@
 
 void Casino::prepareDeck() {
 //    prepare random num gen
-//    std::random_device dev;
     std::mt19937 rng(time(0));
     rng_ = rng;
 
 //    fill current deck
-    std::vector<Karta> temp;
+//    std::vector<Karta> temp;
+//    for(int colour = 0;colour<4;colour++){
+//        for(int figureNum =0;figureNum<13;figureNum++){
+//            Karta tempCard = Karta(colour,figureNum);
+//            temp.emplace_back(tempCard);
+//        }
+//    }
+//
+//
+////    ugly af but works instead of range for loop
+//    for(int i = 0;i<temp.size();i++){
+//        currentDeck_.push_back(&(temp[i]));
+//    }
+
     for(int colour = 0;colour<4;colour++){
-        for(int figureNum =0;figureNum<13;figureNum++){
-            Karta tempCard = Karta(colour,figureNum);
-            temp.emplace_back(tempCard);
+        for(int figureNum =0;figureNum<13;figureNum++) {
+            currentDeck_.push_back(new Karta(colour,figureNum));
         }
-    }
-//    ugly af but works instead of range for loop
-    for(int i = 0;i<temp.size();i++){
-        currentDeck_.push_back(&(temp[i]));
     }
 }
 
@@ -34,6 +41,7 @@ std::ostream &operator<<(std::ostream &os, const Casino &casino) {
     for(auto playerPtr : casino.players_){
         os<<playerPtr->showHand()<<std::endl;
     }
+    return os;
 }
 
 void Casino::shuffleDeck(int numTimes) {
@@ -53,8 +61,11 @@ void Casino::shuffleDeck(int numTimes) {
 }
 
 Karta *Casino::popCard() {
-    Karta* card = currentDeck_[currentDeck_.size()-1];
-    currentDeck_.pop_back();
+//    Karta* card = currentDeck_[currentDeck_.size()-1];
+//    currentDeck_.pop_back();
+//    return card;
+    Karta* card = currentDeck_[currentCardIndexToGive];
+    currentCardIndexToGive++;
     return card;
 }
 
@@ -77,6 +88,7 @@ void Casino::play() {
 
     while (not checkGameOver()){
         for(auto playerPtr : players_){
+            playerPtr->PunktyRzeczywiscieWyjebalo();
             if( not playerPtr->askToPass()){
                 playerPtr->takeCard(this->popCard());
             }
@@ -161,9 +173,9 @@ std::string Casino::to_string()const {
 }
 
 
-Casino::Casino(int numHumanPlayers) {
+Casino::Casino(int numHumanPlayers,int shuffles ) {
     prepareDeck();
-    shuffleDeck();
+    shuffleDeck(shuffles);
     Player* p= nullptr;
     for (int i = 0; i < numHumanPlayers; ++i) {
         p = new Player("Player"+ std::to_string(i+1));
@@ -177,4 +189,10 @@ Casino::Casino(int numHumanPlayers) {
         botNum++;
     }
 
+}
+
+void Casino::printAllCards() const {
+    for (auto cardPtr : currentDeck_){
+        cardPtr->wypisz();
+    }
 }

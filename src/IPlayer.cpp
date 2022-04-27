@@ -8,11 +8,12 @@ std::string IPlayer::showHand()const {
     std::stringstream os;
     os<<IPlayer::name_<<" Points: " << IPlayer::points_<<std::endl;
     for(auto card : cards_){
-        os<<*card<<std::endl;
+        os<<*card<<" ";
     }
+    os<<std::endl;
     return os.str();
 }
-void IPlayer::takeCard(Karta *card) {
+void IPlayer::takeCard(Karta* card) {
     if(cards_.size() != 10){
         cards_.push_back(card);
         points_+= card->getWartosc();

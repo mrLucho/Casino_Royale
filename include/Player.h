@@ -7,7 +7,7 @@
 
 #include <utility>
 #include <vector>
-#include "Karta.h"
+//#include "Karta.h"
 #include "IPlayer.h"
 class Player:public IPlayer{
 public:

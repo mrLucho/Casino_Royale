@@ -5,7 +5,6 @@
 
 bool Bot::askToPass() {
     autoPass();
-    std::cout<<"func from bot has been called" << std::endl;
     if (getPass()) return true;
 
     switch (courage_) {
