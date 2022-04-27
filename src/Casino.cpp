@@ -3,12 +3,13 @@
 #include "Casino.h"
 #include <sstream>
 #include <utility>
+#include <ctime>
 
 
 void Casino::prepareDeck() {
 //    prepare random num gen
-    std::random_device dev;
-    std::mt19937 rng(dev());
+//    std::random_device dev;
+    std::mt19937 rng(time(0));
     rng_ = rng;
 
 //    fill current deck
@@ -42,12 +43,12 @@ void Casino::shuffleDeck(int numTimes) {
         int index1 = CardDist(rng_);
         int index2 = CardDist(rng_);
 //        equal indexes shouldn't be a problem
-        if(index1 == index2) {
-            std::cout << "equal indexes" << std::endl;
+        if(index1 != index2) {
+            Karta* temp = currentDeck_[index1];
+            currentDeck_[index1] = currentDeck_[index2];
+            currentDeck_[index2] = temp;
         }
-        Karta* temp = currentDeck_[index1];
-        currentDeck_[index1] = currentDeck_[index2];
-        currentDeck_[index2] = temp;
+
     }
 }
 
@@ -162,6 +163,7 @@ std::string Casino::to_string()const {
 
 Casino::Casino(int numHumanPlayers) {
     prepareDeck();
+    shuffleDeck();
     Player* p= nullptr;
     for (int i = 0; i < numHumanPlayers; ++i) {
         p = new Player("Player"+ std::to_string(i+1));

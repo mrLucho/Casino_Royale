@@ -13,6 +13,7 @@ bool Player::askToPass() {
         std::cout<<name_<<std::endl;
         std::cout<<"Do u want to pass? if so type true or false:"<<std::endl;
         std::cin>>decision;
+        std::cout<<std::endl;
         if(decision == "true"){
             passed_ = true;
             return true;
@@ -23,8 +24,10 @@ bool Player::askToPass() {
         else{
             std::cout<<"learn how to type moron, I take it as yes"<<std::endl;
             passed_ = true;
+            std::cout<<std::endl;
             return true;
         }
+
     }
 }
 
