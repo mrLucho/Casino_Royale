@@ -303,7 +303,8 @@ void Casino::saveRoundToFile() const {
 }
 // complete game setter
 void Casino::setupGame(int numHumanPlayers, std::vector<std::string> names,const std::vector<Courage>& botTypes) {
-
+    currentCardIndexToGive_=0;
+    players_.clear();
     prepareDeck();
     shuffleDeck();
     //    names
