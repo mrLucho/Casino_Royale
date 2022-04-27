@@ -22,7 +22,7 @@ bool Player::askToPass() {
             return false;
         }
         else{
-            std::cout<<"learn how to type moron, I take it as yes"<<std::endl;
+            std::cout<<"Invalid input, I take it as yes"<<std::endl;
             passed_ = true;
             std::cout<<std::endl;
             return true;

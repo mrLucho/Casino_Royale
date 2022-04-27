@@ -31,7 +31,7 @@ public:
     int getPlayersNum()const{return players_.size();}
 
     void userInterface();
-    void prepareDeck(); //also sets rng
+    void prepareDeck(); //also sets rng and sets current index to 0
 
     void setupGame(int numHumanPlayers,std::vector<std::string> names,const std::vector<Courage>& botTypes);
 
@@ -42,7 +42,6 @@ public:
 
     //    --------------Debug
     std::string showPlayer(int num); //prints players hand
-    int getDeckSize()const{return currentDeck_.size();}
     void printAllCards()const;
 private:
 

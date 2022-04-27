@@ -5,7 +5,6 @@
 #include <utility>
 #include <ctime>
 #include <iomanip>
-#include <conio.h>
 
 void Casino::prepareDeck() {
 //    prepare random num gen
@@ -34,6 +33,7 @@ void Casino::shuffleDeck(int numTimes) {
 
     int cardsNum = currentDeck_.size();
     std::uniform_int_distribution<int> CardDist(0,cardsNum-1);
+
     for(int i=0;i<numTimes;i++){
 
         int index1 = CardDist(rng_);
@@ -42,7 +42,6 @@ void Casino::shuffleDeck(int numTimes) {
         if(index1 != index2) { //if statement may not be needed
             std::swap(currentDeck_[index1],currentDeck_[index2]);
         }
-
     }
 }
 
@@ -53,7 +52,7 @@ Karta *Casino::popCard() {
 }
 
 
-// give two cards o every player
+// give two cards to every player
 void Casino::give2CardsEveryPlayer() {
     for(auto playerPtr : players_){
         Karta* card = this->popCard();
@@ -108,7 +107,7 @@ std::string Casino::getWinner() const {
     for (int i = 0; i < getPlayersNum(); ++i) {
         if(allPlPoints[i] < 21 and allPlPoints[i] > allPlPoints[indexHighestPointsLessThan21]){
             indexHighestPointsLessThan21 = i;
-//          fixme  in case 2 winners here neglect it now
+//          I don't check if there are 2 winners here
         }
     }
 
@@ -149,7 +148,7 @@ std::string Casino::to_string()const {
     return result;
 }
 
-
+// debug purpose constr of casino
 Casino::Casino(int numHumanPlayers,int shuffles ) {
     prepareDeck();
     shuffleDeck(shuffles);
@@ -167,7 +166,7 @@ Casino::Casino(int numHumanPlayers,int shuffles ) {
     }
 
 }
-
+// Debug purpose
 void Casino::printAllCards() const {
     for (auto cardPtr : currentDeck_){
         cardPtr->wypisz();
@@ -188,9 +187,8 @@ Casino::~Casino() {
     }
 }
 
-
+// used in main, complete integration of all methods
 void Casino::userInterface() {
-//    todo: make a menu, give task to intern
     while(true)
     {
 
@@ -206,10 +204,8 @@ void Casino::userInterface() {
         std::cin >> choice;
         std::cout << std::endl;
 
-        switch (choice)
-        {
-            case 1:
-            {
+        switch (choice){
+            case 1:{
                 int humans = -1;
                 char sign = 0;
                 std::string name;
@@ -265,19 +261,15 @@ void Casino::userInterface() {
                 break;
             }
 
-            case 2:
-            {
+            case 2:{
                 exit(EXIT_SUCCESS);
             }
 
-            default:
-            {
+            default:{
                 system("cls");
                 break;
             }
         }
-
-
     }
 }
 
@@ -320,7 +312,5 @@ void Casino::setupGame(int numHumanPlayers, std::vector<std::string> names,const
         d = new Bot("Bot"+ std::to_string(botNum),botTypes[botNum-1]);
         players_.push_back(d);
         botNum++;
-
-
     }
 }
