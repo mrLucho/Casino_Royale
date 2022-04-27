@@ -17,7 +17,7 @@ void Casino::prepareDeck() {
         }
     }
 }
-
+// prints hand of every player
 std::ostream &operator<<(std::ostream &os, const Casino &casino) {
     for(auto playerPtr : casino.players_){
         os<<playerPtr->showHand()<<std::endl;
@@ -25,17 +25,20 @@ std::ostream &operator<<(std::ostream &os, const Casino &casino) {
     return os;
 }
 
+
+
+//    swaps cards, needs rng init and a proper deck
 void Casino::shuffleDeck(int numTimes) {
+
     int cardsNum = currentDeck_.size();
     std::uniform_int_distribution<int> CardDist(0,cardsNum-1);
     for(int i=0;i<numTimes;i++){
+
         int index1 = CardDist(rng_);
         int index2 = CardDist(rng_);
-//        todo: make swap
-        if(index1 != index2) {
-            Karta* temp = currentDeck_[index1];
-            currentDeck_[index1] = currentDeck_[index2];
-            currentDeck_[index2] = temp;
+
+        if(index1 != index2) { //if statement may not be needed
+            std::swap(currentDeck_[index1],currentDeck_[index2]);
         }
 
     }
@@ -86,7 +89,7 @@ bool Casino::checkGameOver() {
     return true;
 }
 
-//looks like working func
+// returns string with winner, need to previous check if all passed
 std::string Casino::getWinner() const {
     std::ostringstream os;
     os<<"---------------------"<<std::endl;
@@ -168,8 +171,10 @@ void Casino::printAllCards() const {
         cardPtr->wypisz();
     }
 }
-Casino::~Casino() {
+
 //    don't touch it
+Casino::~Casino() {
+
     for (auto pObj = players_.begin();
          pObj != players_.end(); ++pObj) {
         delete *pObj;
@@ -179,4 +184,9 @@ Casino::~Casino() {
         delete *pObj; // Note that this is deleting what pObj points to,
         // which is a pointer
     }
+}
+
+
+void Casino::userInterface() {
+//    todo: make a menu, give task to intern
 }

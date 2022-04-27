@@ -30,6 +30,8 @@ public:
     std::string to_string()const;
     int getPlayersNum()const{return players_.size();}
 
+    void userInterface();
+    void prepareDeck(); //also sets rng
 
 
 
@@ -43,7 +45,7 @@ public:
 
 
 private:
-    void prepareDeck(); //used once during constr of casino sets rng
+
     std::mt19937 rng_;
     std::vector<Karta*> currentDeck_;
     std::vector<IPlayer*> players_;

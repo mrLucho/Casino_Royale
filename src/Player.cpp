@@ -11,14 +11,14 @@ bool Player::askToPass() {
     else{
         std::string decision;
         std::cout<<name_<<std::endl;
-        std::cout<<"Do u want to pass? if so type true or false:"<<std::endl;
+        std::cout<<"Do u want to pass? if so type yes or no:"<<std::endl;
         std::cin>>decision;
         std::cout<<std::endl;
-        if(decision == "true"){
+        if(decision == "yes"){
             passed_ = true;
             return true;
         }
-        else if(decision == "false"){
+        else if(decision == "no"){
             return false;
         }
         else{
