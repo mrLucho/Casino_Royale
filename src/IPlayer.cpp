@@ -36,7 +36,7 @@ std::string IPlayer::getCardsForFile() const {
     for (auto cardPtr:cards_) {
         os<<cardPtr->getFigura()<<' ';
         switch (cardPtr->getKolor()) {
-            case 6://good
+            case 6:
                 os<<"spades";
                 break;
             case 3:
@@ -45,7 +45,7 @@ std::string IPlayer::getCardsForFile() const {
             case 4:
                 os<<"diamonds";
                 break;
-            case 5://good
+            case 5:
                 os<<"clubs";
                 break;
             default:

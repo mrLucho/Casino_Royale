@@ -226,7 +226,7 @@ void Casino::userInterface() {
                     }
                     else
                     {
-                        std::cout << "Incorrect humans of players." << std::endl;
+                        std::cout << "Incorrect num of players." << std::endl;
                         std::cout << "Pick again - enter 1,2,3 or 4.\n" << std::endl;
 
                     }
@@ -262,6 +262,7 @@ void Casino::userInterface() {
 
                 setupGame(humans,names,botTypes);
                 playRound();
+                break;
             }
 
             case 2:
@@ -288,10 +289,10 @@ void Casino::saveRoundToFile() const {
     file.open("Results.txt");
 
     const char separator    = ' ';
-    const int nameWidth     = 20;
-    const int cardWidth      = 30;
+    const int nameWidth     = 30;
+    const int cardWidth      = 50;
     for (auto playerPtr:players_) {
-        file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getName();
+        file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getName()<<' ';
         file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getCardsForFile();
         file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getPoints();
         file<<std::endl;
