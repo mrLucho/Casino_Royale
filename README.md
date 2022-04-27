@@ -3,7 +3,6 @@ for Rewińskie
 
 TODO:
 
-- add randomization
 - refactor all this shit
 - add saveResultToFile()
 - make fun of psiarz
