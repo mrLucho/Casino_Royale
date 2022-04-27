@@ -12,7 +12,7 @@
 #include "Player.h"
 #include "Bot.h"
 #include "IPlayer.h"
-
+#include <fstream>
 
 
 class Casino{
@@ -23,8 +23,8 @@ public:
     void shuffleDeck(int numTimes=100);
     friend std::ostream& operator<<(std::ostream& os, const Casino& casino);
     Karta* popCard();
-    void setupGame();
-    void playRound();
+    void give2CardsEveryPlayer();
+    void playRound();//also saves to file
     bool checkGameOver();  // check if all passed
     std::string getWinner()const;
     std::string to_string()const;
@@ -33,17 +33,17 @@ public:
     void userInterface();
     void prepareDeck(); //also sets rng
 
+    void setupGame(int numHumanPlayers,std::vector<std::string> names,const std::vector<Courage>& botTypes);
 
-
-    Casino(int numHumanPlayers=4,int shuffles=100);
+    void saveRoundToFile()const;
+    Casino()=default;
+    Casino(int numHumanPlayers,int shuffles=100);
     ~Casino();
 
     //    --------------Debug
     std::string showPlayer(int num); //prints players hand
-    int getDeckSize()const{return currentDeck_.size();} //current size
+    int getDeckSize()const{return currentDeck_.size();}
     void printAllCards()const;
-
-
 private:
 
     std::mt19937 rng_;

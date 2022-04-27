@@ -16,7 +16,9 @@ public:
     void takeCard(Karta* card);
     friend std::ostream& operator<<(std::ostream& os, const IPlayer& player);
     std::string showHand() const;
-
+    std::string getName()const{return name_;}
+    std::string getCardsForFile()const;
+    void setName(std::string name){name_=std::move(name);}
 
     void autoPass();//updates if points exceeded limit
     int getPoints()const{return points_;}

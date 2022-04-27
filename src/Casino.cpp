@@ -4,12 +4,14 @@
 #include <sstream>
 #include <utility>
 #include <ctime>
-
+#include <iomanip>
+#include <conio.h>
 
 void Casino::prepareDeck() {
 //    prepare random num gen
     std::mt19937 rng(time(0));
     rng_ = rng;
+    currentCardIndexToGive_=0;
 
     for(int colour = 0;colour<4;colour++){
         for(int figureNum =0;figureNum<13;figureNum++) {
@@ -51,8 +53,8 @@ Karta *Casino::popCard() {
 }
 
 
-
-void Casino::setupGame() {
+// give two cards o every player
+void Casino::give2CardsEveryPlayer() {
     for(auto playerPtr : players_){
         Karta* card = this->popCard();
         playerPtr->takeCard(card);
@@ -63,13 +65,12 @@ void Casino::setupGame() {
 }
 
 void Casino::playRound() {
-    setupGame(); // give two cards to every player
+    give2CardsEveryPlayer(); // give two cards to every player
 
     std::cout<< this->to_string()<<std::endl;
 
     while (not checkGameOver()){
         for(auto playerPtr : players_){
-            playerPtr->PunktyRzeczywiscieWyjebalo();
             if( not playerPtr->askToPass()){
                 playerPtr->takeCard(this->popCard());
             }
@@ -77,11 +78,12 @@ void Casino::playRound() {
         std::cout<< this->to_string()<<std::endl;
     }
     std::cout<<getWinner()<<std::endl;
+    saveRoundToFile();
 }
 
+// checks if every player passed
 bool Casino::checkGameOver() {
     for(auto player : this->players_){
-//        if even one player not passed playRound on
         if(not player->getPass()){
             return false;
         }
@@ -134,7 +136,7 @@ std::string Casino::getWinner() const {
     return os.str();
 }
 
-
+// Debug purpose, returns player's hand
 std::string Casino::showPlayer(int num) {
     return players_[num]->showHand();
 }
@@ -189,4 +191,134 @@ Casino::~Casino() {
 
 void Casino::userInterface() {
 //    todo: make a menu, give task to intern
+    while(true)
+    {
+
+        std::cout << "Menu" << std::endl;
+        std::cout << "-----------------" << std::endl;
+        std::cout << "CHOOSE AN OPTION:" << std::endl;
+        std::cout << "1. Play" << std::endl;
+        std::cout << "2. Exit" << std::endl;
+
+        int choice = 0;
+        std::cout << std::endl;
+        std::cout << "CHOICE: ";
+        std::cin >> choice;
+        std::cout << std::endl;
+
+        switch (choice)
+        {
+            case 1:
+            {
+                int humans = -1;
+                char sign = 0;
+                std::string name;
+                while(humans < 1 or humans > 4)
+                {
+                    std::cout << "Type humans (1-4 required):" << std::endl;
+                    std::cout << "PICKED AMOUNT: ";
+                    std::cin >> humans;
+                    std::cout << std::endl;
+
+                    if(humans >= 1 and humans <= 4)
+                    {
+                        std::cout << "Good choice sir." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Incorrect humans of players." << std::endl;
+                        std::cout << "Pick again - enter 1,2,3 or 4.\n" << std::endl;
+
+                    }
+                }
+//                humans is set
+                std::vector<std::string> names;
+                for (int i = 0; i < humans; ++i) {
+                    std::cout<<"Enter "<<std::to_string(i+1)<<" Player name:"<<std::endl;
+                    std::cin>>name;
+                    names.push_back(name);
+                }
+//                names are set
+
+
+
+                std::vector<Courage> botTypes;
+                std::string botTypeChoice;
+                for (int i = 0; i < 4-humans; ++i) {
+                    std::cout<<"Enter bot type rash, normal or cautious:"<<std::endl;
+                    std::cin>>botTypeChoice;
+
+                    if (botTypeChoice == "rash") botTypes.push_back(Courage::rash);
+                    else if (botTypeChoice == "normal") botTypes.push_back(Courage::normal);
+                    else if (botTypeChoice == "cautious") botTypes.push_back(Courage::cautious);
+                    else{
+                        std::cout<<"learn how to type moron, i take it as normal"<<std::endl;
+                        botTypes.push_back(Courage::normal);
+                    }
+
+                }
+//                bot types set
+
+
+                setupGame(humans,names,botTypes);
+                playRound();
+            }
+
+            case 2:
+            {
+                exit(EXIT_SUCCESS);
+            }
+
+            default:
+            {
+                system("cls");
+                break;
+            }
+        }
+
+
+    }
+}
+
+
+
+
+void Casino::saveRoundToFile() const {
+    std::ofstream file;
+    file.open("Results.txt");
+
+    const char separator    = ' ';
+    const int nameWidth     = 20;
+    const int cardWidth      = 30;
+    for (auto playerPtr:players_) {
+        file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getName();
+        file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getCardsForFile();
+        file << std::left << std::setw(nameWidth) << std::setfill(separator) << playerPtr->getPoints();
+        file<<std::endl;
+    }
+
+
+    file.close();
+}
+// complete game setter
+void Casino::setupGame(int numHumanPlayers, std::vector<std::string> names,const std::vector<Courage>& botTypes) {
+
+    prepareDeck();
+    shuffleDeck();
+    //    names
+    if(names.size() != numHumanPlayers) std::cout<<"Wrong data"<<std::endl;
+    Player* p= nullptr;
+    for (int i = 0; i < numHumanPlayers; ++i) {
+        p = new Player(names[i]);
+        players_.push_back(p);
+    }
+    Bot* d = nullptr;
+    int botNum = 1;
+    for (int j = numHumanPlayers; j < 4; j++) {
+        d = new Bot("Bot"+ std::to_string(botNum),botTypes[botNum-1]);
+        players_.push_back(d);
+        botNum++;
+
+
+    }
 }

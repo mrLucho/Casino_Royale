@@ -2,9 +2,10 @@
 #include "Casino.h"
 
 int main() {
-//    Casino casinoRoyale = Casino(true);
+    Casino casinoRoyale = Casino();
+    casinoRoyale.userInterface();
 //    casinoRoyale.shuffleDeck();
-//    casinoRoyale.setupGame();
+//    casinoRoyale.give2CardsEveryPlayer();
 
 //    Player player1 =  Player("pl 1");
 //    Player player2 = Player("pl 2");
@@ -13,18 +14,20 @@ int main() {
 //    std::vector<Player*> players = {&player1,&player2,&player3,&bot1};
 
 
-    Casino casinoRoyale = Casino(2,100);
-//    casinoRoyale.shuffleDeck();
+//    Casino casinoRoyale = Casino(2,100);
+//    casinoRoyale.give2CardsEveryPlayer();
+
+//    casinoRoyale.saveRoundToFile();
 //    casinoRoyale.printAllCards();
-//        casinoRoyale.setupGame();
+
 //    for (int i = 0; i < 52; ++i) {
 //        std::cout<<*casinoRoyale.popCard()<<std::endl;
 //    }
 
 //    std::cout<<casinoRoyale.showPlayer(0);
-//    std::cout<<casinoRoyale<<std::endl;
+    std::cout<<casinoRoyale<<std::endl;
 //    std::cout<<casinoRoyale;
-    casinoRoyale.playRound();
+//    casinoRoyale.playRound();
 //std::cout<<casinoRoyale
 
     return EXIT_SUCCESS;

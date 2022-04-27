@@ -30,3 +30,27 @@ void IPlayer::autoPass() {
         passed_ = true;
     }
 }
+
+std::string IPlayer::getCardsForFile() const {
+    std::stringstream os;
+    for (auto cardPtr:cards_) {
+        os<<cardPtr->getFigura()<<' ';
+        switch (cardPtr->getKolor()) {
+            case 6://good
+                os<<"spades";
+                break;
+            case 3:
+                os<<"hearts";
+                break;
+            case 4:
+                os<<"diamonds";
+                break;
+            case 5://good
+                os<<"clubs";
+                break;
+            default:
+                os<<"this will never happen";
+        }
+    }
+    return os.str();
+}
